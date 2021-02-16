@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Car = require('./Car')
 
 const schema = new mongoose.Schema({
     name: {
@@ -15,7 +16,9 @@ const schema = new mongoose.Schema({
         region: String,
         country: String,
         postalCode: String
-    }
+    },
+    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'Car'}
+
 })
 const Model = mongoose.model('Person', schema)
 

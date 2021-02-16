@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-    const Person = await (await person.findById(req.params.id))
+    const Person = await person.findById(req.params.id).populate('owner')
     if (!Person) {
     throw new Error('Resource not found')
     }
