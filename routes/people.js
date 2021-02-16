@@ -6,4 +6,14 @@ router.get('/', async (req, res) => {
     res.send({data: people})
 })
 
+router.post('/', async (req, res) => {
+    let attributes = req.body
+    delete attributes._id
+
+    const newPerson = new person(attributes)
+    await newPerson.save()
+
+    res.status(201).send({data: newPerson})
+})
+
 module.exports = router
