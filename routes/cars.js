@@ -1,6 +1,10 @@
+const Car = require('../models/Car')
 const router = require('express').Router()
 
-router.get('/', async (req, res) => {})
+router.get('/', async (req, res) => {
+    const cars = await Car.find()
+    res.send({data: cars})
+})
 
 router.post('/', async (req, res) => {})
 

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const schema = new mongoose.Schema.Types({
+const schema = new mongoose.Schema({
     make: String,
     model: String,
     colour: String
