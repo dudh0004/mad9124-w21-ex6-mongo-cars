@@ -48,6 +48,28 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
+router.put('/:id', async (req, res) => {
+    const {_id, id, ...otherAttributes} = req.body
+    try { 
+    const Person = await person.findByIdAndUpdate(
+        req.params.id, 
+        {_id: req.params.id, ...otherAttributes}, 
+        {
+            new: true,
+            overwrite: true,
+            runValidators: true
+        }
+    )
+    if (!Person) {
+        throw new Error('Resource not found')
+    }
+    res.send({data: Person})
+    } catch (err) {
+        sendResourceNotFound(req, res)
+    }
+})
+
+
 
 function sendResourceNotFound(req, res) {
     res.status(404).send({
