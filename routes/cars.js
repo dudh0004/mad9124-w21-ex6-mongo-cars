@@ -28,7 +28,25 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.patch('/:id', async (req, res) => {})
+router.patch('/:id', async (req, res) => {
+    const {_id, id, ...otherAttributes} = req.body
+    try { 
+    const car = await Car.findByIdAndUpdate(
+        req.params.id, 
+        {_id: req.params.id, ...otherAttributes}, 
+        {
+            new: true,
+            runValidators: true
+        }
+    )
+    if (!car) {
+        throw new Error('Resource not found')
+    }
+    res.send({data: car})
+    } catch (err) {
+        sendResourceNotFound(req, res)
+    }
+})
 
 router.put('/:id', async (req, res) => {})
 
