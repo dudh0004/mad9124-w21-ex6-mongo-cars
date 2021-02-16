@@ -16,12 +16,34 @@ router.post('/', async (req, res) => {
     res.status(201).send({data: newCar})
 })
 
-router.get('/:id', async (req, res) => {})
+router.get('/:id', async (req, res) => {
+    try {
+    const car = await Car.findById(req.params.id)
+    if (!car) {
+    throw new Error('Resource not found')
+    }
+    res.send({data: car})
+    } catch (err) {
+        sendResourceNotFound(req, res);
+    }
+})
 
 router.patch('/:id', async (req, res) => {})
 
 router.put('/:id', async (req, res) => {})
 
 router.delete('/:id', async (req, res) => {})
+
+function sendResourceNotFound(req, res) {
+    res.status(404).send({
+        errors: [
+            {
+                status: '404',
+                title: 'Resource does not exist',
+                description: `We could not find a car with id: ${req.params.id}`
+            }
+        ]
+    })
+}
 
 module.exports = router
