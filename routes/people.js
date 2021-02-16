@@ -69,7 +69,17 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-
+router.delete('/:id', async (req, res) => {
+    try { 
+        const Person = await person.findByIdAndRemove(req.params.id)
+        if (!Person) {
+            throw new Error('Resource not found')
+        }
+        res.send({data: Person})
+        } catch (err) {
+            sendResourceNotFound(req, res)
+        }
+})
 
 function sendResourceNotFound(req, res) {
     res.status(404).send({
