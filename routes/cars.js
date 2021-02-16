@@ -6,7 +6,15 @@ router.get('/', async (req, res) => {
     res.send({data: cars})
 })
 
-router.post('/', async (req, res) => {})
+router.post('/', async (req, res) => {
+    let attributes = req.body
+    delete attributes._id
+
+    const newCar = new Car(attributes)
+    await newCar.save()
+
+    res.status(201).send({data: newCar})
+})
 
 router.get('/:id', async (req, res) => {})
 
